@@ -34,12 +34,12 @@ class ThevergeSpider(scrapy.Spider):
         for node in response.xpath('//atom:entry', namespaces=self.namespaces):
 
             # assign title
-            title = node.xpath('atom:title/text()', namespaces=self.namespaces).extract_first()
+            title = node.xpath('atom:title/text()', namespaces=self.namespaces).get()
 
             # assign other variables using node selector with namespaces
-            date = node.xpath('atom:published/text()', namespaces=self.namespaces).extract_first()
+            date = node.xpath('atom:published/text()', namespaces=self.namespaces).get()
             #------------------------------------------------------------------
-            description = node.xpath('atom:content/text()', namespaces=self.namespaces).extract_first()
+            description = node.xpath('atom:content/text()', namespaces=self.namespaces).get()
             # Remove line breaks from description
             description = description.replace('\n', ' ')
             # Create selector from description
@@ -51,7 +51,7 @@ class ThevergeSpider(scrapy.Spider):
             # Double backward slashed is fundamental to get the author correctly, 
             # otherwise it will return None
             #------------------------------------------------------------------
-            url = node.xpath('atom:link/@href', namespaces=self.namespaces).extract_first()
+            url = node.xpath('atom:link/@href', namespaces=self.namespaces).get()
             
             loader = ThevergeNewsLoader(selector=node)
             loader.add_value('title', title)
@@ -60,7 +60,7 @@ class ThevergeSpider(scrapy.Spider):
             loader.add_value('url', url)
             loader.add_value('author', author)
             # Get article url to parse the whole article
-            article_url = node.xpath('atom:link/@href', namespaces=self.namespaces).extract_first()
+            article_url = node.xpath('atom:link/@href', namespaces=self.namespaces).get()
             # Create request to parse the whole article
             yield scrapy.Request(article_url, callback=self.parse_page, meta={'loader': loader})
 
