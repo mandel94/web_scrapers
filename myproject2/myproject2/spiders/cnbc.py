@@ -8,11 +8,8 @@ from scrapy.loader.processors import Join
 
 
 class CNBCNewsLoader(ItemLoader):
-
     default_item_class = NewsItem
-
     default_input_processor = MapCompose(lambda s: s.strip(), str.lower) 
-
     # Define default output processor
     default_output_processor = Join()
     # The output of author is a list, so we need to join it using comma separator
@@ -37,18 +34,18 @@ class CnbcSpider(XMLFeedSpider):
         # response.xpath('author', '//a[@class="Author-authorName"]/text()')
         #Get author from response
         author = response.xpath('//a[@class="Author-authorName"]/text()').getall()
-        body = response.xpath('//div[@class="group"]/p/text()')
+        body = response.xpath('//div[@class="group"]//text()').getall()
         loader.add_value('author', author)
         return loader.load_item()
 
     def parse_node(self, response, node):
         #use iteam loader to populate the item fields
         loader = CNBCNewsLoader(selector=node)
-        #print out loader selector
-        pubDate = node.xpath('pubDate/text()').extract_first()
-        description = node.xpath('description/text()').extract_first()
-        url = node.xpath('link/text()').extract_first()
-        
+        title = node.xpath('title/text()').get()
+        pubDate = node.xpath('pubDate/text()').get()
+        description = node.xpath('description/text()').get()
+        url = node.xpath('link/text()').get()
+        loader.add_value('title', title)
         loader.add_value('date', pubDate)
         loader.add_value('description', description)
         loader.add_value('url', url)
