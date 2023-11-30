@@ -36,6 +36,7 @@ class CnbcSpider(XMLFeedSpider):
         author = response.xpath('//a[@class="Author-authorName"]/text()').getall()
         body = response.xpath('//div[@class="group"]//text()').getall()
         loader.add_value('author', author)
+        loader.add_value('body', body)
         return loader.load_item()
 
     def parse_node(self, response, node):
@@ -49,8 +50,6 @@ class CnbcSpider(XMLFeedSpider):
         loader.add_value('date', pubDate)
         loader.add_value('description', description)
         loader.add_value('url', url)
-        loader.add_value('source', 'CNBC')
-
         yield scrapy.Request(url=url, callback=self.parse_page, meta={'loader': loader})
     
 
