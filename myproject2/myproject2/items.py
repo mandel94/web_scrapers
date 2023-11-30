@@ -11,12 +11,15 @@ class NewsItem(scrapy.Item):
     # name = scrapy.Field()
     # Define the properties that we want to scrape, and the corresponding fields,
     # having a NewsArticle in mind.
+    # Define news_id field
+    news_id = scrapy.Field(default=None)
     title = scrapy.Field(default=None)
     date = scrapy.Field(default=None)
     description = scrapy.Field(default=None)
     url = scrapy.Field(default=None)
     body = scrapy.Field(default=None)
     author = scrapy.Field(default=None)
+    source = scrapy.Field(default=None)
     pass
 
 

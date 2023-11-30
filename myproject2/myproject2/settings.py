@@ -62,9 +62,10 @@ ROBOTSTXT_OBEY = False
 
 # Configure item pipelines
 # See https://docs.scrapy.org/en/latest/topics/item-pipeline.html
-#ITEM_PIPELINES = {
-#    "myproject2.pipelines.Myproject2Pipeline": 300,
-#}
+# Define Pipeline to persist news item in MongoDB
+ITEM_PIPELINES = {
+    "myproject2.pipelines.NewsMongoDBPipeline": 300,
+}
 
 # Enable and configure the AutoThrottle extension (disabled by default)
 # See https://docs.scrapy.org/en/latest/topics/autothrottle.html
@@ -97,5 +98,8 @@ FEEDS = {
     }
 }
 
-
+MONGO_URI = "mongodb://localhost:27017"
+MONGODB_PORT = 27017
+MONGO_DATABASE = "media"
+MONGODB_COLLECTION = "news"
 

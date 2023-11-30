@@ -59,6 +59,7 @@ class ThevergeSpider(scrapy.Spider):
             loader.add_value('description', description)
             loader.add_value('url', url)
             loader.add_value('author', author)
+            loader.add_value('source', 'The Verge')
             # Get article url to parse the whole article
             article_url = node.xpath('atom:link/@href', namespaces=self.namespaces).extract_first()
             # Create request to parse the whole article
@@ -71,6 +72,5 @@ class ThevergeSpider(scrapy.Spider):
         body = response.xpath('//p/text()').getall()
         loader.add_value('body', body)
         #Log length of body
-        self.logger.info("body length: %s", len(loader.get_output_value('body')))
         return loader.load_item()
     
