@@ -98,9 +98,8 @@ FEEDS = {
     }
 }
 
-# Hostname is the name of the container (mongo-db)
-# in the docker-compose.yml file
-MONGO_URI = "mongodb://localhost:27017/"
+
+MONGO_URI = "mongodb://localhost:27017"
 MONGODB_PORT = 27017
 MONGO_DATABASE = "media"
 MONGODB_COLLECTION = "news"
