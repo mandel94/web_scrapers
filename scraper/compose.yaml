@@ -1,0 +1,31 @@
+version: '3'
+
+services:
+  scraper:
+    build: .
+    ports:
+      - "8000:5000"
+    depends_on:
+      mongodb:
+        condition: service_healthy
+    networks:
+      - newshub
+  mongodb:
+    image: mongodb/mongodb-community-server
+    container_name: mongodb
+    ports:
+      - "27017:27017"
+    networks:
+      - newshub
+    healthcheck:
+      test: ["CMD", "mongosh", "--eval", "db.serverStatus().ok"]
+      interval: 10s
+      timeout: 30s
+      retries: 3
+    
+networks:
+  newshub:
+    driver: bridge
+
+
+
