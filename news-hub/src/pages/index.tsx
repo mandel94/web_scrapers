@@ -1,24 +1,22 @@
-import DashboardLayout from "../layouts/dashboardLayout"; 
-import HeaderContent from "../components/headerContent/headerContent";  
-import MainContent from "../components/mainContent/mainContent"; 
-import Logo from "../components/logo/logo";
-import NavbarList from "../components/navbarList/navbarList";
-import styles from "./home.module.css";
+import React from "react";
+import { useState } from "react";
+import { SideBar } from "@/types/types";
+import { NextPageWithLayout } from "./_app";
+import { useLayoutContext } from "@/context/layoutContext";
 
+const Home: NextPageWithLayout = () => {
+  const [currentLayout, setCurrentLayout] = useLayoutContext();
+  const toggleLayout = ( layout: string ) => {
+    layout === "sidebar" ? setCurrentLayout("navbar") : setCurrentLayout("sidebar") 
+  }
 
-// Default page is OverviewPage
-
-const MainPage: React.FC = () => {
   return (
-    <main className={styles.main}>
-      <div className={styles['main-container']}>
-      <DashboardLayout>
-        <HeaderContent Logo={ Logo } NavbarList={ NavbarList }/>
-        <MainContent />
-      </DashboardLayout>
+    <div className="home">
+      <h1>Change Layout</h1>
+      <button onClick={() => toggleLayout(currentLayout) }>Click here!</button>
+      <div className="current-layout">
+        <h2>Current Layout: { currentLayout }</h2>
       </div>
-    </main>
+    </div>
   );
 };
-
-export default OverviewPage;

@@ -1,17 +1,13 @@
-import React from 'react';
-import styles from './logo.module.css';
-
-// Define TypeScript for Logo. Logo takes an image src code as a prop
+import { Logo } from '@/types/types'
 
 
-// Define Logo function
-
-const Logo: React.FC = (src) => {
+const Logo: Logo = ({ src, alt }) => {
     return (
         <div className="logo">
-            <img src='./images/Color logo with background.png' alt="Logo" className={styles['logo-image']} />
+            <img src={ src as string } alt = { alt }/>
         </div>
-    );
-};
+    )
+}       
+
 
 export default Logo;
