@@ -1,34 +1,34 @@
-import NextLink, { LinkProps as NextLinkProps } from 'next/link';
-import Image, { ImageProps } from 'next/image';
-import React from 'react';
+import NextLink, { LinkProps as NextLinkProps } from "next/link";
+import Image, { ImageProps } from "next/image";
+import React from "react";
 
 /* NavBar Menu Best practices https://webflow.com/blog/navigation-bar-design */
 
-
 interface NavMenuProps {
-    isOpen: boolean;
+  // Children of type next Link
+  links: string[];
+  isOpen: boolean;
 }
 
-interface SideBarProps {
-    // Define isOpen property with type boolean
-    isOpen: boolean;
+interface LogoProps {
+  src: string;
+  alt: string;
 }
 
-
-interface NavBarProps {
-    logo: Logo;
-    navMenu: NavMenu;
+interface NavigationProps {
+  logo: LogoProps;
+  menu: NavMenuProps;
+  isSidebar?: boolean;
 }
 
-type LogoProps = ImageProps;  
+// Create type that omits isSidebar property from NavigationProps
+export type NavbarProps = Omit<NavigationProps, "isSidebar">;
+export type SidebarProps = Omit<NavigationProps, "isSidebar">;
 
 
-export type Logo = React.FC<LogoProps>
 
-export type NavBar = React.FC<NavBarProps>; 
-
+export type Navigation = React.FC<NavigationProps>;
+export type Logo = React.FC<LogoProps>;
+export type Navbar = React.FC<NavbarProps>;
+export type Sidebar = React.FC<SidebarProps>;
 export type NavMenu = React.FC<NavMenuProps>;
-
-export type SideBar = React.FC<SideBarProps>;
-
-

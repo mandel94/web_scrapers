@@ -1,22 +1,40 @@
 import React from "react";
-import { useState } from "react";
-import { SideBar } from "@/types/types";
+import Navbar from "@/components/navigation/navbar/navbar";
 import { NextPageWithLayout } from "./_app";
 import { useLayoutContext } from "@/context/layoutContext";
+import { LayoutProvider } from "@/context/layoutContext";
+import type { InferGetStaticPropsType, GetStaticProps } from "next";
 
-const Home: NextPageWithLayout = () => {
+export const getStaticProps = (async () => {
+  const navlinks = process.env.NAVBAR_LINKS.split(",");
+  return { props: { navlinks } };
+}) satisfies GetStaticProps<{
+  navlinks: string[];
+}>;
+
+const Home: NextPageWithLayout = ({
+  navlinks,
+}: InferGetStaticPropsType<typeof getStaticProps>) => {
   const [currentLayout, setCurrentLayout] = useLayoutContext();
-  const toggleLayout = ( layout: string ) => {
-    layout === "sidebar" ? setCurrentLayout("navbar") : setCurrentLayout("sidebar") 
-  }
+  // const toggleLayout = ( layout: string ) => {
+  //   layout === "sidebar" ? setCurrentLayout("navbar") : setCurrentLayout("sidebar")
+  // }
 
   return (
-    <div className="home">
-      <h1>Change Layout</h1>
-      <button onClick={() => toggleLayout(currentLayout) }>Click here!</button>
-      <div className="current-layout">
-        <h2>Current Layout: { currentLayout }</h2>
-      </div>
-    </div>
+    // Add Sidebar component with props extracted by configuration file
+    // Basic home page
+    <>
+      <h1>This is the main page</h1>
+    </>
   );
 };
+
+Home.getLayout = function getLayout(page) {
+  return (
+    <LayoutProvider>
+      {page}
+    </LayoutProvider>
+  );
+};
+
+export default Home;

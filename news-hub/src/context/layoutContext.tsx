@@ -10,8 +10,9 @@ enum Layouts {
 
 type SayALayout = keyof typeof Layouts;
 
+type layoutContextType = [ SayALayout, React.Dispatch<React.SetStateAction<SayALayout>> ];
 
-const layoutContext = createContext(useState("sidebar"));
+const layoutContext = createContext<layoutContextType | undefined >(undefined);
 
 export function LayoutProvider({ children }) {
     const [layout, setLayout] = useState<SayALayout>("sidebar");
