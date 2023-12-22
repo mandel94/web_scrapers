@@ -16,10 +16,18 @@ interface LogoProps {
 }
 
 interface NavigationProps {
-  logo: LogoProps;
-  menu: NavMenuProps;
-  isSidebar?: boolean;
+    layoutType: ;
 }
+
+
+enum Layouts {
+    sidebar = "SIDEBAR",
+    navbar = "NAVBAR",
+}
+
+type SayALayout = keyof typeof Layouts;
+
+
 
 // Create type that omits isSidebar property from NavigationProps
 export type NavbarProps = Omit<NavigationProps, "isSidebar">;
@@ -32,3 +40,5 @@ export type Logo = React.FC<LogoProps>;
 export type Navbar = React.FC<NavbarProps>;
 export type Sidebar = React.FC<SidebarProps>;
 export type NavMenu = React.FC<NavMenuProps>;
+
+export type layoutContextType = [ SayALayout, React.Dispatch<React.SetStateAction<SayALayout>> ];
