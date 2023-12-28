@@ -1,28 +1,41 @@
 import React from "react";
-import { Navigation } from "@/types/types";
+import { Navigation } from "@/types/userTypes";
+import { SayALayout, MenuProps } from "@/types/utilsTypes";
 import Sidebar from "@/components/navigation/sidebar/sidebar";
 import Navbar from "@/components/navigation/navbar/navbar";
-import { useLayoutContext } from "@/context/layoutContext";
+import { useState } from "react";
+import { Switch } from "@/components/utils/Switch";
 
-const Navigation: Navigation = () => {
-  const [currentLayout, setCurrentLayout] = useLayoutContext();
 
-  const isSidebar = currentLayout === "sidebar";
 
-  const logoProps = {
-    src: process.env.LOGO_IMAGE_URL,
-    alt: process.env.LOGO_IMAGE_ALT,
-  };
+const Navigation: Navigation = ({ logo, links, layout }) => {
 
-  const menuProps = {
-    links: process.env.NAVBAR_LINKS.split(","),
+  const [currentLayout, setcurrentLayout] = useState<SayALayout>(layout);
+
+  const toggleLayout = (layout: SayALayout) => {
+    setcurrentLayout(layout);
+  }
+
+  const menu: MenuProps = {
+    links: links,
     isOpen: false,
-  };
+  }
 
   return (
-    (isSidebar && <Sidebar logo={logoProps} menu={menuProps} />) || (
-      <Navbar logo={logoProps} menu={menuProps} />
-    )
+    <div className="navigation">
+    <Switch condition={ currentLayout }>
+      <Switch.Case when={ "sidebar" }>
+        <Sidebar logo={{...logo}} menu={{...menu}} />
+      </Switch.Case>
+      <Switch.Case when={ "navbar" }>
+        <Navbar logo={{...logo}} menu={{...menu}} />
+      </Switch.Case>
+      <Switch.Default>
+        <Sidebar logo={{...logo}} menu={{...menu}} />
+      </Switch.Default>
+    </Switch>
+    <button onClick={() => toggleLayout("navbar")}>Switch</button>
+    </div>  
   );
 };
 
