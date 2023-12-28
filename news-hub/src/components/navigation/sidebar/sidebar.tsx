@@ -1,12 +1,12 @@
 import Logo from '@/components/logo/logo';
-import { Sidebar } from '@/types/utilsTypes';
+import { Sidebar } from '@/types/navigationTypes';
 import NavMenu from "../navMenu/navMenu";
 
-const Sidebar: Sidebar = ({ logo, menu }) => {
+const Sidebar: Sidebar = ({ logo, links, isOpen }) => {
     return (
         <>
         <Logo src={ logo.src } alt={ logo.alt } />
-        <NavMenu links={ menu.links } isOpen={ menu.isOpen } /> 
+        <NavMenu links={ links } isOpen={ isOpen } /> 
         </>
     )
 }

@@ -1,6 +1,5 @@
 import React from "react";
-import { Navigation } from "@/types/userTypes";
-import { SayALayout, MenuProps } from "@/types/utilsTypes";
+import { Navigation, SayALayout } from "@/types/navigationTypes";
 import Sidebar from "@/components/navigation/sidebar/sidebar";
 import Navbar from "@/components/navigation/navbar/navbar";
 import { useState } from "react";
@@ -12,26 +11,23 @@ const Navigation: Navigation = ({ logo, links, layout }) => {
 
   const [currentLayout, setcurrentLayout] = useState<SayALayout>(layout);
 
+  const [isOpen, setIsOpen] = useState<boolean>(true);
+
   const toggleLayout = (layout: SayALayout) => {
     setcurrentLayout(layout);
-  }
-
-  const menu: MenuProps = {
-    links: links,
-    isOpen: false,
   }
 
   return (
     <div className="navigation">
     <Switch condition={ currentLayout }>
       <Switch.Case when={ "sidebar" }>
-        <Sidebar logo={{...logo}} menu={{...menu}} />
+        <Sidebar logo={{...logo}} links={ links } isOpen={ isOpen } />
       </Switch.Case>
       <Switch.Case when={ "navbar" }>
-        <Navbar logo={{...logo}} menu={{...menu}} />
+        <Navbar logo={{...logo}} links={ links } isOpen={ isOpen } />
       </Switch.Case>
       <Switch.Default>
-        <Sidebar logo={{...logo}} menu={{...menu}} />
+        <Sidebar logo={{...logo}} links={ links } isOpen={ isOpen } />
       </Switch.Default>
     </Switch>
     <button onClick={() => toggleLayout("navbar")}>Switch</button>
