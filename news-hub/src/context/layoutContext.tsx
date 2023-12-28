@@ -3,14 +3,6 @@
 import { createContext, useState, useContext } from 'react';
 
 
-enum Layouts {
-    sidebar = "SIDEBAR",
-    navbar = "NAVBAR",
-}
-
-type SayALayout = keyof typeof Layouts;
-
-type layoutContextType = [ SayALayout, React.Dispatch<React.SetStateAction<SayALayout>> ];
 
 const layoutContext = createContext<layoutContextType | undefined >(undefined);
 
