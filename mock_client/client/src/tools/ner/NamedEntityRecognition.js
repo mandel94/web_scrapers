@@ -3,13 +3,13 @@ import { Button } from '@mui/base/Button';
 import { Input } from '@mui/base/Input';
 
 
-function App() {
+function NamedEntityRecognition() {
   return (
-    <div className="App">
-      <h1 className="text-3xl font-bold">
+    <div className="ner-container">
+      <h1 className="text-3xl font-bold ner-title">
         Named entity Recognition
       </h1>
-      <div className='ner-tool'>
+      <div className='ner-form'>
         <Input defaultValue={""}
           name='text'
           placeholder='My name is Clara and I live in Berkeley, California.'
@@ -21,4 +21,4 @@ function App() {
   );
 }
 
-export default App;
+export default NamedEntityRecognition;
